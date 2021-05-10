@@ -9,7 +9,7 @@ class User(models.Model):
     name = models.CharField('user name', max_length=10, default='imput name')
     now_dan = models.CharField('now dan-i', max_length=10, default='shi1')  # 現在の段位
     now_rank_point = models.IntegerField('now dan-i point') # 現在のランクポイント
-    now_total_point = models.IntegerField('now Total point')    # 現在の累計ポイント
+    now_total_point = models.IntegerField('初期ポイントを含む累計ポイント')    # 現在の累計ポイント
 
     def __str__(self):
         return self.name
@@ -20,6 +20,10 @@ class User(models.Model):
         dict_rank_point = {"shin1":0,"shin2":20,"shin3":100,"shi1":300,"shi2":900,"shi3":1700
                 ,"ketsu1":2700,"ketsu2":3900,"ketsu3":5300,"go1":7300,"go2":10100,"go3":13300
                 ,"sei1":16900,"sei2":20900,"sei3":26900,"ten":35900}
+
+        dict_rank_point_without_shoki = {"shin1":0,"shin2":20,"shin3":100,"shi1":300,"shi2":600,"shi3":1000
+                ,"ketsu1":1500,"ketsu2":2100,"ketsu3":2800,"go1":3800,"go2":5200,"go3":6800
+                ,"sei1":8600,"sei2":10600,"sei3":13600,"ten":18100}
 
         # 現在の累計ポイントは現在ランクに到達するまでの累計ポイントと今現在のランクポイントの合計で算出
         now_total_point = dict_rank_point[self.now_dan]     
