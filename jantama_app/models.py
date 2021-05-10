@@ -86,8 +86,10 @@ class Match(models.Model):
         user = User.objects.get(name=self.name)
 
         user.now_rank_point = user.now_rank_point + self.rank_point
+        user.now_total_point = user.now_total_point + self.rank_point
+        print(user.now_total_point)
         user.save()
-        return user.now_rank_point
+        return user.now_total_point
 
     def get_danni(self):        # 今現在のuserの段位を取得
         user = User.objects.get(name=self.name)
@@ -95,6 +97,7 @@ class Match(models.Model):
 
     def danni_check(self):      # userが昇段したかチェック
         user = User.objects.get(name=self.name)
+        point = self.total_point
 
         # 次の段位に必要な点数
         danni_next = {"shin1":20,"shin2":80,"shin3":200,"shi1":600,"shi2":800,"shi3":1000
@@ -106,6 +109,15 @@ class Match(models.Model):
                 ,"ketsu1":600,"ketsu2":700,"ketsu3":1000,"go1":1400,"go2":1600,"go3":1800
                 ,"sei1":2000,"sei2":3000,"sei3":45000,"ten":10000}
 
+        # 特定ランク（Key）になるまでの累計ポイント(Value)
+        dict_rank_point = {"shin1":0,"shin2":20,"shin3":100,"shi1":300,"shi2":900,"shi3":1700
+                ,"ketsu1":2700,"ketsu2":3900,"ketsu3":5300,"go1":7300,"go2":10100,"go3":13300
+                ,"sei1":16900,"sei2":20900,"sei3":26900,"ten":35900}
+
+        danni_ruikei_kiso = {"shin1":0,"shin2":20,"shin3":100,"shi1":600,"shi2":1300,"shi3":2200
+                ,"ketsu1":3300,"ketsu2":4600,"ketsu3":6300,"go1":8700,"go2":11700,"go3":15100
+                ,"sei1":18900,"sei2":23900,"sei3":31400,"ten":45900}
+
         # 段位のリスト
         danni = ["shin1","shin2","shin3","shi1","shi2","shi3","ketsu1","ketsu2","ketsu3",
                 "go1","go2","go3","sei1","sei2","sei3","ten"]
@@ -116,10 +128,12 @@ class Match(models.Model):
             user.now_dan = danni[index+1]
             user.save()
             print(user.now_dan)
-            user.now_total_point = user.now_total_point + danni_kiso[user.now_dan]
+            user.now_total_point = dict_rank_point[user.now_dan]
+            user.now_rank_point = danni_kiso[user.now_dan]
             user.save()
+            point = dict_rank_point[user.now_dan] + danni_kiso[user.now_dan]
 
-        return 
+        return point
 
     def save(self, *args, **kwargs):
         self.dan = self.get_danni()
@@ -131,6 +145,6 @@ class Match(models.Model):
             if self.total_point < 0:
                 self.total_point = 0
 
-        self.danni_check()
+        self.total_point = self.danni_check()
         
         super().save(*args, **kwargs)
