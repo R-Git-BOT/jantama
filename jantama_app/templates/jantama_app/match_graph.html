@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.2.0/chartjs-plugin-colorschemes.min.js"></script>
+</head>
+<body>
+    <a href="{% url 'jantama_app:read_post' %}">戻る</a>
+    <a href="{% url 'jantama_app:create_user' %}">ユーザー登録</a>
+    <a href="{% url 'jantama_app:create_match_post' %}">試合データ登録</a>
+
+    <canvas id="line-chart"></canvas>
+    <script>
+        const data = {
+            labels: {{label|safe}},
+            datasets: [{
+                label: 'jantama total point',
+                data: {{data|safe}},
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+
+        var config = {
+            type: 'line',
+            data: data
+        };
+
+        var myChart = new Chart(
+            document.getElementById('line-chart'),
+            config
+        );
+    </script>
+</body>
+</html>

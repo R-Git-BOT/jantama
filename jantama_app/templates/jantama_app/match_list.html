@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jantama Match lists</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Match Date</th>
+                <th>User Name</th>
+                <th>卓</th>
+                <th>順位</th>
+                <th>最終点数</th>
+                <th>ポイント増減</th>
+                <th>累計ポイント</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.mdate }}</td>
+                <td>{{ post.name }}</td>
+                <td>{{ post.taku }}</td>
+                <td>{{ post.rank }}</td>
+                <td>{{ post.result_point }}</td>
+                <td>{{ post.rank_point }}</td>
+                <td>{{ post.total_point }}</td>>
+                <td>
+                    <a href="{% url 'jantama_app:edit_match_post' post_id=post.id %}">修正</a>
+                    <a href="{% url 'jantama_app:delete_match_post' post_id=post.id %}">削除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'jantama_app:create_match_post' %}">試合データ登録</a>
+    <a href="{% url 'jantama_app:create_user' %}">ユーザー登録してない人はこっち</a>
+    <a href="{% url 'jantama_app:match_graph' %}">グラフ表示</a>
+</body>
+</html>

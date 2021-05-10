@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Form</title>
+</head>
+<body>
+    <h4>Post の編集</h4>
+    {% if post_id %}
+    <form action="{% url 'jantama_app:edit_match_post' post_id=post_id %}" method="post">
+    {% else %}
+    <form action="{% url 'jantama_app:create_match_post' %}" method="post">
+    {% endif %}
+        {% csrf_token %}
+        {{ form }}
+            <button type="submit">送信</button>
+    </form>
+    <a href="{% url 'jantama_app:read_post' %}">戻る</a>
+    <a href="{% url 'jantama_app:create_user' %}">ユーザー登録してない人はこっち</a>
+</body>
+</html>
