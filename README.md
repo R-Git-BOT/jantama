@@ -23,6 +23,8 @@ The Match could not be created because the data didn't validate.
 Matchモデルを登録した際に、nameが同名のUserモデルのnow_total_pointも更新
 
 # 今後の目標
+3麻に対応
+
 ユーザー登録時のエラーを無くす
 
 コードを綺麗にする
