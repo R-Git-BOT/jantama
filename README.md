@@ -9,6 +9,8 @@ jantama_app
 # 実行方法
 乗っけてるファイル全部引っ張ってくる
 jantamaディレクトリで py manage.py runserver
+ローカル環境で実行
+/jantama_app/
 
 # 問題点
 ユーザー登録しようとした時にエラー
@@ -21,6 +23,12 @@ The Match could not be created because the data didn't validate.
 なるべく最小の入力でランクの増減や累計ポイントを計算するようにした
 
 Matchモデルを登録した際に、nameが同名のUserモデルのnow_total_pointも更新
+
+# 詰まった点
+
+## Chart.jsが上手く表示されない
+- DateオブジェクトをそのままLabelに送っていたのでダメだったっぽい
+- Dateオブジェクトを文字列に変換して無事解決
 
 # 今後の目標
 3麻に対応
